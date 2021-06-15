@@ -1,3 +1,15 @@
 {
-    
+    "name":"Name:",
+    "username_label":"User name:",
+    "username_input":"Your user name...",
+    "gamelanguage_label":"Game language",
+    "gamelanguage_select":"Choose a language",
+    "play_button":"Start playing!",
+    "createRoom":"Create room",
+    "joinRoom":"Join room",
+    "numberRoom":"Room Number:",
+    "password":"Password:",
+    "numberRoom_input":"Insert room number...",
+    "password_input":"Your password...",
+    "password_input_c":"Insert password..."
 }
