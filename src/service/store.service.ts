@@ -59,4 +59,4 @@ export const deleteSocket = () => ({
     type: actionsType.DELET_SOCKET
 })
 
-export const store =createStore(combineReducers({Auth,Socket}));
+export const store = createStore(combineReducers({Auth,Socket}));

@@ -9,7 +9,12 @@ import {
 
 import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
 
-export default class example extends Component {
+export class GameRoom extends Component<any> {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -72,5 +77,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#39579A', justifyContent: 'center', alignItems: 'center', borderRadius: 5,
     }
 });
-
-AppRegistry.registerComponent('example', () => example);
