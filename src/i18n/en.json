@@ -11,5 +11,11 @@
     "password":"Password:",
     "numberRoom_input":"Insert room number...",
     "password_input":"Your password...",
-    "password_input_c":"Insert password..."
+    "password_input_c":"Insert password...",
+    "roomLang":"Language",
+    "roomMaxPlayers":"Players",
+    "roomRound":"Rounds",
+    "roomTime":"Round time",
+    "roomId":"Room number",
+    "waiting":"Waiting for players"
 }

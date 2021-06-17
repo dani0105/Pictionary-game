@@ -1,7 +1,8 @@
-import {addUser,deleteUser,store, getStore} from './store.service';
+import {addUser,deleteUser,store, getStore,addSocket} from './store.service';
 export{
     addUser,
     deleteUser,
     getStore,
+    addSocket,
     store,
 };

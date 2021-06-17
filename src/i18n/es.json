@@ -11,5 +11,11 @@
     "password":"Constraseña:",
     "numberRoom_input":"Inserte numero sala...",
     "password_input":"Tu contraseña...",
-    "password_input_c":"Inserte contraseña..."
+    "password_input_c":"Inserte contraseña...",
+    "roomLang":"Idioma",
+    "roomMaxPlayers":"Jugadores",
+    "roomRound":"Rondas",
+    "roomTime":"Tiempo del turno",
+    "roomId":"Numero de sala",
+    "waiting":"Esperando jugadores"
 }

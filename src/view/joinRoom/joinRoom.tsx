@@ -33,7 +33,7 @@ class JoinRoom extends Component<any> {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ImageBackground  source={require('C:\\Users\\aliha\\ProyectoReactNative\\pictionary-frontend\\src\\view\\Fondo_Pictionary.png')}  style={styles.backgroundImage}>
+                <ImageBackground  source={require('../../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
                     <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:330 }}>
                         <Text style={styles.textStyle}>
                             {lang.numberRoom}
