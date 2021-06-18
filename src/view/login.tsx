@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { getStore } from "../../service";
+import { lang } from '../i18n/lang';
+import { Alert, StyleSheet, Text, SafeAreaView, View, TextInput, ImageBackground, Pressable} from "react-native";
+import { addUser } from "../service";
 import { connect } from "react-redux";
-import { Alert, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { lang } from '../../i18n/lang';
 
 interface State {
     username: string
 }
 
-class DashBoard extends Component<any> {
+class Login extends Component<any> {
 
     public state: State;
 
@@ -19,34 +19,32 @@ class DashBoard extends Component<any> {
         }
     }
 
-    createRoom = () => {
+    startGame = () => {
         //Start the game
-        this.props.navigation.push('CreateRoom')
-        Alert.alert("Final");
-    } 
-
-    joinRoom = () => {
-        //Start the game
-        this.props.navigation.push('JoinRoom')
-        Alert.alert("Final");
+        const user_data = {
+            data: this.state.username
+        }
+        this.props.addUser(user_data)
+        this.props.navigation.push('DashBoard')
+        Alert.alert(user_data.data);
     } 
 
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ImageBackground  source={require('../../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
-                    <View style={{paddingTop: 370}}>
-                        <Pressable
-                            style={styles.button}
-                            onPress={() => this.createRoom()}>
-                            <Text style={styles.textStyle}>{lang.createRoom}</Text>
-                        </Pressable>
+                <ImageBackground  source={require('../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
+                    <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:370 }}>
+                        <Text style={styles.textStyle}>
+                            {lang.username_label}
+                        </Text>
+                        <TextInput style={styles.input} placeholder={lang.username_input} onChangeText={(value:string) => this.setState({username: value})}>
+                        </TextInput>
                     </View>
                     <View style={{paddingTop:20}}> 
                         <Pressable
                             style={styles.button}
-                            onPress={() => this.joinRoom()}>
-                            <Text style={styles.textStyle}>{lang.joinRoom}</Text>
+                            onPress={() => this.startGame()}>
+                            <Text style={styles.textStyle}>{lang.play_button}</Text>
                         </Pressable>
                     </View>
                 </ImageBackground>
@@ -76,7 +74,7 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        margin: 5
+        margin: 10
     },
     backgroundImage:{
         flex : 1,
@@ -85,7 +83,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateTOprops = (state: any) => {
-    return getStore(state);
-}
-export default connect(mapStateTOprops)(DashBoard);
+export default connect(null, { addUser })(Login);

@@ -1,8 +1,8 @@
-import {GameRoom} from "./gameRoom/gameRoom"
-import Login from "./login/login"
-import DashBoard from "./dashBoard/dashBoard"
-import CreateRoom from "./createRoom/createRoom"
-import JoinRoom from "./joinRoom/joinRoom"
+import GameRoom from "./gameRoom"
+import Login from "./login"
+import DashBoard from "./dashBoard"
+import CreateRoom from "./createRoom"
+import JoinRoom from "./joinRoom"
 
 export {
     GameRoom,

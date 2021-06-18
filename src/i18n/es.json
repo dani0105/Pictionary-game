@@ -2,7 +2,7 @@
     "name":"Nombre:",
     "username_label":"Nombre de usuario:",
     "username_input":"Tu nickname...",
-    "gamelanguage_label":"Idioma del juego",
+    "gamelanguage_label":"Idioma del juego:",
     "gamelanguage_select":"Elije el idioma",
     "play_button":"Empezar",
     "createRoom":"Crear sala",

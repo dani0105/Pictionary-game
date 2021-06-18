@@ -9,31 +9,25 @@ import {
     View,
     Alert,
 } from 'react-native';
-import { addSocket, addUser, store } from './service';
+import { addUser, store } from './service';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
+import { io } from 'socket.io-client';
+import { addSocket } from './service/store.service';
 import config from './envConfig';
-import { io } from "socket.io-client";
+
+import { NavigationContainer } from '@react-navigation/native';
 
 const generalStack = createStackNavigator();
-export class App extends React.Component<any> {
+export class App extends React.Component {
 
-    public state:any;
 
     constructor(props) {
         super(props);
-        this.state = {
-            connecting:true
-        }
     }
 
-    componentDidMount(){
-        store.dispatch(addUser( {username:"Prueba"} ) );
+    componentDidMount() {
         store.dispatch(addSocket( io(config.ApiUrl) ) );
-        store.subscribe(() => {
-            this.setState({ connecting: false });
-        })
     }
 
     render() {

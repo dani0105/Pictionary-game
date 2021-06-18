@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { getStore } from "../../service";
+import { getStore } from "../service";
 import { connect } from "react-redux";
-import { ImageBackground, Picker, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { lang } from '../../i18n/lang';
+import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { lang } from '../i18n/lang';
 import NumericInput from 'react-native-numeric-input';
+import { Picker } from '@react-native-picker/picker';
 
 interface State {
 
@@ -63,11 +64,8 @@ class CreateRoom extends Component<any> {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ImageBackground source={require('../../assets/Fondo_Pictionary.png')} style={styles.backgroundImage}>
+                <ImageBackground source={require('../assets/Fondo_Pictionary.png')} style={styles.backgroundImage}>
                     <View style={styles.formContainer}>
-
-
-
                         {this.state.roomId >= 0 ? (
                             <View style={{ marginTop: 10 }}>
                                 <Text style={{ fontSize: 18, fontWeight: '600' }}>

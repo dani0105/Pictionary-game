@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { getStore } from "../../service";
+import { getStore } from "../service";
 import { connect } from "react-redux";
 import { Alert, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { lang } from '../../i18n/lang';
+import { lang } from '../i18n/lang';
 
 interface State {
     username: string
@@ -19,21 +19,16 @@ class JoinRoom extends Component<any> {
         }
     }
 
-    createRoom = () => {
-        //Start the game
-        this.props.navigation.push('GameRoom')
-        Alert.alert("Final");
-    } 
-
     joinRoom = () => {
         //Start the game
+        this.props.navigation.push('GameRoom')
         Alert.alert("Final");
     } 
 
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ImageBackground  source={require('../../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
+                <ImageBackground  source={require('../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
                     <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:330 }}>
                         <Text style={styles.textStyle}>
                             {lang.numberRoom}

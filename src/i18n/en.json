@@ -3,7 +3,7 @@
     "username_label":"User name:",
     "username_input":"Your user name...",
     "gamelanguage_label":"Game language",
-    "gamelanguage_select":"Choose a language",
+    "gamelanguage_select":"Choose a language:",
     "play_button":"Start playing!",
     "createRoom":"Create room",
     "joinRoom":"Join room",
