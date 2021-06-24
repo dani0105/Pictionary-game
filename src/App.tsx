@@ -14,7 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import { addSocket } from './service/store.service';
-import config from './envConfig';
+import config from './envConfig.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -50,6 +50,6 @@ export class App extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1
+        flex: 1
     }
 });

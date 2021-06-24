@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { getStore } from "../service";
 import { connect } from "react-redux";
-import { Alert, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, ToastAndroid } from 'react-native';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import { lang } from '../i18n/lang';
 
 interface State {
-    username: string
+    username: string,
+    roomCode: string,
+    roomPassword: string,
+    showAlert: boolean
 }
 
 class JoinRoom extends Component<any> {
@@ -15,44 +19,105 @@ class JoinRoom extends Component<any> {
     constructor(props) {
         super(props);
         this.state = {
-            username: ""
+            username: "",
+            roomCode: "",
+            roomPassword: "",
+            showAlert: false
         }
     }
 
+
     joinRoom = () => {
         //Start the game
-        this.props.navigation.push('GameRoom')
-        Alert.alert("Final");
-    } 
+        //Send request to the socket
+        this.props.Socket.emit("room:connect", {
+            id:this.state.roomCode,
+            password:this.state.roomPassword
+        })
+        //Listen response from the socket
+        this.props.Socket.on("room:connected", (data: any) => {
+            console.log(data.success)
+            if (data.success){
+                this.props.navigation.push('GameRoom')
+            }else{
+                this.setState({showAlert:true})
+            }
+        })
+    }
+
+
+    showToast = () =>{
+        this.setState({roomCode: ""});
+        ToastAndroid.showWithGravityAndOffset(
+            lang.roomNumberNull,
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+        );
+    }
+
+
 
     render() {
-        return (
-            <SafeAreaView style={styles.container}>
-                <ImageBackground  source={require('../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
-                    <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:330 }}>
-                        <Text style={styles.textStyle}>
-                            {lang.numberRoom}
-                        </Text>
-                        <TextInput style={styles.input} placeholder={lang.numberRoom_input} onChangeText={(value:string) => this.setState({password: value})}>
-                        </TextInput>
-                    </View>
-                    <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:20 }}>
-                        <Text style={styles.textStyle}>
-                            {lang.password}
-                        </Text>
-                        <TextInput style={styles.input} placeholder={lang.password_input_c} onChangeText={(value:string) => this.setState({password: value})}>
-                        </TextInput>
-                    </View>
-                    <View> 
-                        <Pressable
-                            style={styles.button}
-                            onPress={() => this.joinRoom()}>
-                            <Text style={styles.textStyle}>{lang.joinRoom}</Text>
-                        </Pressable>
-                    </View>
-                </ImageBackground>
-            </SafeAreaView>
-        );
+        if(this.state.showAlert)
+            return(
+                <SafeAreaView style={styles.container}>
+                    <ImageBackground source={require('../assets/Fondo_Pictionary_2.png')}  style={styles.backgroundImage}>
+                        <AwesomeAlert 
+                            show={this.state.showAlert}
+                            showProgress={false}
+                            title={lang.joinRoomErr}
+                            message={lang.joinRoomErrMsg}
+                            closeOnTouchOutside={false}
+                            closeOnHardwareBackPress={false}
+                            showCancelButton={false}
+                            showConfirmButton={true}
+                            cancelText=""
+                            confirmText="Ok"
+                            confirmButtonColor="#5DBB63"
+                            onCancelPressed={() => {
+                                this.setState({showAlert:false});
+                            }}
+                            onConfirmPressed={() => {
+                                this.setState({showAlert:false});
+                            }}
+                            titleStyle={{textAlign: "center"}}
+                            messageStyle={{textAlign: "center"}}
+                        />                        
+                    </ImageBackground>
+                </SafeAreaView>
+            );
+        else
+            return (
+                <SafeAreaView style={styles.container}>
+                    <ImageBackground  source={require('../assets/Fondo_Pictionary_2.png')}  style={styles.backgroundImage}>
+                        <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:330 }}>
+                            <Text style={styles.textStyle}>
+                                {lang.roomNumber}
+                            </Text>
+                            <TextInput style={styles.input} placeholder={lang.numberRoom_input} placeholderTextColor="#FFFFFF" 
+                            keyboardType="numeric" onChangeText={(value:string) => this.setState({roomCode: value})}>
+                            </TextInput>
+                        </View>
+                        <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:20 }}>
+                            <Text style={styles.textStyle}>
+                                {lang.password}
+                            </Text>
+                            <TextInput style={styles.input} placeholder={lang.password_input_c} placeholderTextColor="#FFFFFF" 
+                            onChangeText={(value:string) => this.setState({roomPassword: value})}>
+                            </TextInput>
+                        </View>
+                        <View> 
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => this.state.roomCode == "" ? this.showToast() : this.joinRoom()}>
+                                <Text style={styles.textStyle}>{lang.joinRoom}</Text>
+                            </Pressable>
+                        </View>
+                    </ImageBackground>                    
+                </SafeAreaView>
+            );
     }
 }
 
