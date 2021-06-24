@@ -5,6 +5,7 @@ import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View
 import { lang } from '../i18n/lang';
 import NumericInput from 'react-native-numeric-input';
 import { Picker } from '@react-native-picker/picker';
+import { GameRoom } from '.';
 
 interface State {
 
@@ -61,22 +62,19 @@ class CreateRoom extends Component<any> {
         })
     }
 
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-                <ImageBackground source={require('../assets/Fondo_Pictionary.png')} style={styles.backgroundImage}>
-                    <View style={styles.formContainer}>
-                        {this.state.roomId >= 0 ? (
-                            <View style={{ marginTop: 10 }}>
-                                <Text style={{ fontSize: 18, fontWeight: '600' }}>
-                                    {lang.roomId}: {this.state.roomId}
-                                </Text>
+    onFinishGame = () => {
 
-                                <Text style={{ fontSize: 16, marginTop: 10, textAlign: 'center', fontWeight: '600' }}>
-                                    {lang.waiting}
-                                </Text>
-                            </View>
-                        ) : (
+    }
+
+    render() {
+
+        if (this.state.roomId >= 0) {
+            return (<GameRoom Socket={this.props.Socket} idRoom={this.state.roomId} onFinish={this.onFinishGame} />)
+        } else
+            return (
+                <SafeAreaView style={styles.container}>
+                    <ImageBackground source={require('../assets/Fondo_Pictionary.png')} style={styles.backgroundImage}>
+                        <View style={styles.formContainer}>
                             <View>
 
                                 <View style={{ flexDirection: 'row' }}>
@@ -144,12 +142,12 @@ class CreateRoom extends Component<any> {
                                         <Text>{lang.createRoom}</Text>
                                     </TouchableOpacity>
                                 </View>
-                            </View>)}
+                            </View>
 
-                    </View>
-                </ImageBackground>
-            </SafeAreaView>
-        );
+                        </View>
+                    </ImageBackground>
+                </SafeAreaView>
+            );
     }
 }
 

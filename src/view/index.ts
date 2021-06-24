@@ -1,4 +1,4 @@
-import GameRoom from "./gameRoom"
+import {GameRoom} from "./gameRoom"
 import Login from "./login"
 import DashBoard from "./dashBoard"
 import CreateRoom from "./createRoom"
