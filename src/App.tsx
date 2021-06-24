@@ -19,7 +19,7 @@ import config from './envConfig';
 import { NavigationContainer } from '@react-navigation/native';
 
 const generalStack = createStackNavigator();
-export class App extends React.Component {
+export class App extends React.Component<any> {
 
 
     constructor(props) {
