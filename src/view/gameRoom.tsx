@@ -16,7 +16,7 @@ interface props {
     idRoom: number
     onFinish: () => void,
     Socket: Socket,
-    timer:number
+    isJoin:boolean
 }
 
 interface State {
@@ -50,14 +50,29 @@ export class GameRoom extends Component<props> {
             timeIntervale:null
         }
 
-
+        this.props.Socket.on("preround", this.preRound);
         this.props.Socket.on("room:players", this.onPlayerUpdate);
         this.props.Socket.on("chat:receive", this.onChatReceive);
-        this.props.Socket.on("room:deleted", this.onFinish);
-        this.props.Socket.on("preround", this.preRound);
         this.props.Socket.on("round", this.onRound);
+        this.props.Socket.on("room:got", this.onGotRoom);
+        this.props.Socket.on("room:deleted", this.onFinish);
         this.props.Socket.on("word", this.onWord);
         this.stopwatch = this.stopwatch.bind(this);
+        if(this.props.isJoin){
+            this.props.Socket.emit("room:get");
+        }
+    }
+
+    // aqu´llega toda la informacion del la sal
+    onGotRoom = (data)=> {
+        this.setState({
+            currentRound:data.currentRound,
+            wordLength:data.wordLength,
+            totalRounds:data.totalRounds,
+            timer:data.timer,
+            timeIntervale:setInterval(this.stopwatch,1000),
+            players:data.players
+        });
     }
 
     /*

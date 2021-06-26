@@ -25,8 +25,7 @@ class Login extends Component<any> {
             data: this.state.username
         }
         this.props.addUser(user_data)
-        this.props.navigation.push('GameRoom')
-        Alert.alert(user_data.data);
+        this.props.navigation.push('DashBoard')
     } 
 
     render() {

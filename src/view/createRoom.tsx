@@ -69,7 +69,7 @@ class CreateRoom extends Component<any> {
     render() {
 
         if (this.state.roomId >= 0) {
-            return (<GameRoom Socket={this.props.Socket} idRoom={this.state.roomId} onFinish={this.onFinishGame} timer={this.state.time} />)
+            return (<GameRoom isJoin={false} Socket={this.props.Socket} idRoom={this.state.roomId} onFinish={this.onFinishGame}/>)
         } else
             return (
                 <SafeAreaView style={styles.container}>

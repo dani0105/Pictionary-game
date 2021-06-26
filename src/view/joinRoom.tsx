@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import { Alert, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, ToastAndroid } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { lang } from '../i18n/lang';
+import { GameRoom } from './gameRoom';
 
 interface State {
     username: string,
     roomCode: string,
     roomPassword: string,
-    showAlert: boolean
+    showAlert: boolean,
+    roomId:number
 }
 
 class JoinRoom extends Component<any> {
@@ -22,6 +24,7 @@ class JoinRoom extends Component<any> {
             username: "",
             roomCode: "",
             roomPassword: "",
+            roomId:-1,
             showAlert: false
         }
     }
@@ -36,9 +39,8 @@ class JoinRoom extends Component<any> {
         })
         //Listen response from the socket
         this.props.Socket.on("room:connected", (data: any) => {
-            console.log(data.success)
             if (data.success){
-                this.props.navigation.push('GameRoom')
+                this.setState({roomId:this.state.roomCode})
             }else{
                 this.setState({showAlert:true})
             }
@@ -57,9 +59,16 @@ class JoinRoom extends Component<any> {
         );
     }
 
+    onFinishGame = () => {
+
+    }
 
 
     render() {
+        if (this.state.roomId >= 0) {
+            return (<GameRoom isJoin={true} Socket={this.props.Socket} idRoom={this.state.roomId} onFinish={this.onFinishGame}/>)
+        }
+
         if(this.state.showAlert)
             return(
                 <SafeAreaView style={styles.container}>
