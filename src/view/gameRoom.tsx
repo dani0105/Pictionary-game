@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { lang } from '../i18n/lang';
 import { Socket } from 'socket.io-client';
 import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
+import CanvasPaint from './canvas';
+import ChatText from './chat';
 
 interface props {
     idRoom: number
@@ -153,9 +155,11 @@ export class GameRoom extends Component<props> {
                     </View>
                 </View>
                 <View>
+                    <CanvasPaint/>
                     {/* Aquí va el componente del canvas */}
                 </View>
                 <View>
+                    <ChatText/>
                     {/* Aquí va el componente del chat*/}
                 </View>
             </View>
