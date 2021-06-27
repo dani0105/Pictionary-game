@@ -15,6 +15,7 @@
     "numberRoom_input":"Inserte número sala...",
     "password_input":"Tu contraseña...",
     "password_input_c":"Inserte contraseña...",
+    "password_input_create":"dejar vacío si la sala es pública",
     "roomLang":"Idioma",
     "roomMaxPlayers":"Jugadores",
     "roomRound":"Rondas",

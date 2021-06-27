@@ -37,14 +37,20 @@ class DashBoard extends Component<any> {
                         <Pressable
                             style={styles.button}
                             onPress={() => this.createRoom()}>
-                            <Text style={styles.textStyle}>{lang.createRoom}</Text>
+                            <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                            textAlign: "center", marginRight: 10}}>
+                                {lang.createRoom}
+                            </Text>
                         </Pressable>
                     </View>
                     <View style={{paddingTop:20}}> 
                         <Pressable
                             style={styles.button}
                             onPress={() => this.joinRoom()}>
-                            <Text style={styles.textStyle}>{lang.joinRoom}</Text>
+                            <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                            textAlign: "center", marginRight: 10}}>
+                                {lang.joinRoom}
+                            </Text>
                         </Pressable>
                     </View>
                 </ImageBackground>

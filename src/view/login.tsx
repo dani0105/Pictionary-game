@@ -44,7 +44,10 @@ class Login extends Component<any> {
                         <Pressable
                             style={styles.button}
                             onPress={() => this.startGame()}>
-                            <Text style={styles.textStyle}>{lang.play_button}</Text>
+                            <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                            textAlign: "center", marginRight: 10}}>
+                                {lang.play_button}
+                            </Text>
                         </Pressable>
                     </View>
                 </ImageBackground>

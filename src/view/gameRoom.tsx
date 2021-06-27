@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    FlatList,
     Modal,
     StyleSheet,
     Text,
@@ -177,6 +178,13 @@ export class GameRoom extends Component<props> {
         setTimeout(() => this.setState({ isPreRound: false }), data.preRound)
     }
 
+    renderItem = ({ item }) => (
+        <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text>{item.username}: </Text>
+            <Text>{item.points}: </Text>
+        </View>
+    );
+
     render() {
         return (
             <View>
@@ -189,6 +197,12 @@ export class GameRoom extends Component<props> {
                             <Text>
                                 Ranking
                             </Text>
+                            <FlatList
+                                style={{display:'flex',flexDirection:'column',height:'100%'}}
+                                data={this.state.players}
+                                renderItem={this.renderItem}
+                                keyExtractor={item => item.id}
+                            />
                         </View>
 
                     </View>

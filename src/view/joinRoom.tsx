@@ -125,7 +125,10 @@ class JoinRoom extends Component<any> {
                             <Pressable
                                 style={styles.button}
                                 onPress={() => this.state.roomCode == "" ? this.showToast() : this.joinRoom()}>
-                                <Text style={styles.textStyle}>{lang.joinRoom}</Text>
+                                    <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                                    textAlign: "center", marginRight: 10}}>
+                                        {lang.joinRoom}
+                                    </Text>
                             </Pressable>
                         </View>
                     </ImageBackground>                    
