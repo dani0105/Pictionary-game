@@ -203,7 +203,7 @@ export class GameRoom extends Component<props> {
                     </View>
                 </View>
                 <View style={{height:'60%'}}>
-                    <CanvasPaint/>
+                    <CanvasPaint pintor={this.state.isPlaying} Socket={this.props.Socket} />
                     {/* <CanvasPaint/> Aquí va el componente del canvas */}
                 </View>
                 <View style={{height:'40%'}}>

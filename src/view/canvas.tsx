@@ -7,68 +7,93 @@ import {
 import { getStore } from "../service";
 import { connect } from "react-redux";
 
-import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
+import RNSketchCanvas, { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
+import { Socket } from 'socket.io-client';
+
+interface props{
+    pintor:boolean,
+    Socket: Socket
+}
 
 interface State {
     username: string
 }
 
-class CanvasPaint extends Component<any> {
+class CanvasPaint extends Component<props> {
 
     public state: State;
     public canvas: any;
+    public canvasReceived: any;
 
     constructor(props) {
         super(props);
         this.state = {
             username: ""
         }
+        this.props.Socket.on("draw:upated", this.dataCanvasRecived); 
     }
 
     dataCanvasSend = () => {
         this.props.Socket.emit("draw:update", {element:this.canvas._sketchCanvas._paths});
     }
+
+    dataCanvasRecived = (data) => {
+        this.canvasReceived.addPath(data);
+    }
     
     render() {
-        return (
-            <View style={styles.container}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <RNSketchCanvas
-                        containerStyle={{ backgroundColor: 'transparent', flex: 1 }}
-                        canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
-                        defaultStrokeIndex={0}
-                        defaultStrokeWidth={5}
-                        undoComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Undo</Text></View>}
-                        clearComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Clear</Text></View>}
-                        eraseComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Eraser</Text></View>}
-                        strokeComponent={color => (
-                            <View style={[{ backgroundColor: color }, styles.strokeColorButton]} />
-                        )}
-                        strokeSelectedComponent={(color) => {
-                            console.log(color)
-                            return (
-                                <View style={[{ backgroundColor: color, borderWidth: 2 }, styles.strokeColorButton]} />
-                            )
-                        }}
-                        strokeWidthComponent={(w) => {
-                            console.log(w)
-                            return (<View style={styles.strokeWidthButton}>
-                                <View style={{
-                                    backgroundColor: 'white', marginHorizontal: 2.5,
-                                    width: Math.sqrt(w / 3) * 10, height: Math.sqrt(w / 3) * 10, borderRadius: Math.sqrt(w / 3) * 10 / 2}} />
-                            </View>
-                            )
-                        }}
-                        ref = {ref => this.canvas = ref}
-                        onPathsChange = {()=>{this.canvas._sketchCanvas._paths.forEach(element => {
-                                this.dataCanvasSend()
-                                console.log(element)
-                        });console.log("hola")}}
-                    />
-                    
+        if(this.props.pintor){
+            return (
+                <View style={styles.container}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <RNSketchCanvas
+                            containerStyle={{ backgroundColor: 'transparent', flex: 1 }}
+                            canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
+                            defaultStrokeIndex={0}
+                            defaultStrokeWidth={5}
+                            undoComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Undo</Text></View>}
+                            clearComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Clear</Text></View>}
+                            eraseComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Eraser</Text></View>}
+                            strokeComponent={color => (
+                                <View style={[{ backgroundColor: color }, styles.strokeColorButton]} />
+                            )}
+                            strokeSelectedComponent={(color) => {
+                                console.log(color)
+                                return (
+                                    <View style={[{ backgroundColor: color, borderWidth: 2 }, styles.strokeColorButton]} />
+                                )
+                            }}
+                            strokeWidthComponent={(w) => {
+                                console.log(w)
+                                return (<View style={styles.strokeWidthButton}>
+                                    <View style={{
+                                        backgroundColor: 'white', marginHorizontal: 2.5,
+                                        width: Math.sqrt(w / 3) * 10, height: Math.sqrt(w / 3) * 10, borderRadius: Math.sqrt(w / 3) * 10 / 2}} />
+                                </View>
+                                )
+                            }}
+                            ref = {ref => this.canvas = ref}
+                            onPathsChange = {()=>{this.canvas._sketchCanvas._paths.forEach(element => {
+                                    this.dataCanvasSend()
+                                    console.log(element)
+                            });console.log("hola")}}
+                        />    
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        }else{
+            return (
+                <View style={styles.container}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <SketchCanvas
+                            touchEnabled = {false}
+                            style={{ flex: 1 }}
+                            ref = {ref => this.canvasReceived = ref}
+                        />
+                    </View>
+                </View>
+            );
+        }
     }
 }
 

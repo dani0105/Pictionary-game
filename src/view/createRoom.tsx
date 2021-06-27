@@ -6,6 +6,7 @@ import { lang } from '../i18n/lang';
 import NumericInput from 'react-native-numeric-input';
 import { Picker } from '@react-native-picker/picker';
 import { GameRoom } from '.';
+import { ScreenHeight } from 'react-native-elements/dist/helpers';
 
 interface State {
 
@@ -73,18 +74,17 @@ class CreateRoom extends Component<any> {
         } else
             return (
                 <SafeAreaView style={styles.container}>
-                    <ImageBackground source={require('../assets/Fondo_Pictionary.png')} style={styles.backgroundImage}>
+                    <ImageBackground source={require('../assets/Fondo_Pictionary_2.png')} style={styles.backgroundImage}>
                         <View style={styles.formContainer}>
                             <View>
-
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ height: '100%' }}>
+                                    <View style={{ height: '100%', width: 110 }}>
                                         <Text>{lang.roomLang}</Text>
                                     </View>
                                     <View>
                                         <Picker
                                             onValueChange={(itemValue, itemIndex) => this.setState({ lang: itemValue })}
-                                            style={{ minWidth: 150 }}
+                                            style={{ minWidth: 160 }}
                                             selectedValue={this.state.lang}>
                                             <Picker.Item label="Español" value="es_es" />
                                             <Picker.Item label="Ingles" value="en_en" />
@@ -93,13 +93,13 @@ class CreateRoom extends Component<any> {
                                 </View>
 
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ height: '100%' }}>
+                                    <View style={{ height: '100%', width: 110 }}>
                                         <Text>{lang.roomMaxPlayers}</Text>
                                     </View>
                                     <View>
                                         <Picker
                                             onValueChange={(itemValue, itemIndex) => this.setState({ maxPlayer: itemValue })}
-                                            style={{ minWidth: 150 }}
+                                            style={{ minWidth: 160 }}
                                             selectedValue={this.state.maxPlayer.toString()}>
                                             <Picker.Item label="4 Jugadores" value="4" />
                                             <Picker.Item label="8 Jugadores" value="8" />
@@ -108,7 +108,7 @@ class CreateRoom extends Component<any> {
                                 </View>
 
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ height: '100%' }}>
+                                    <View style={{ height: '100%', width: 115 }}>
                                         <Text>{lang.roomRound}</Text>
                                     </View>
                                     <View>
@@ -117,13 +117,13 @@ class CreateRoom extends Component<any> {
                                 </View>
 
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ height: '100%' }}>
+                                    <View style={{ height: '100%', width: 110 }}>
                                         <Text>{lang.roomTime}</Text>
                                     </View>
                                     <View>
                                         <Picker
                                             onValueChange={(itemValue, itemIndex) => this.setState({ time: itemValue })}
-                                            style={{ minWidth: 150 }}
+                                            style={{ minWidth: 160 }}
                                             selectedValue={this.state.time.toString()}>
                                             <Picker.Item label="30 Segundos" value="30" />
                                             <Picker.Item label="1 Minuto" value="60" />
@@ -166,9 +166,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     formContainer: {
-        backgroundColor: '#FFFFFF',
-        height: '50%',
-        width: '85%',
+        height: '30%',
+        width: '65%',
         borderRadius: 5,
         padding: 10
     }
