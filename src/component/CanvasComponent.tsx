@@ -2,47 +2,55 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
+    TouchableOpacity,
     View
 } from 'react-native';
 import { getStore } from "../service";
 import { connect } from "react-redux";
 
-import RNSketchCanvas, { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
+import RNSketchCanvas, { Path, SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
 import { Socket } from 'socket.io-client';
 
 interface props{
-    pintor:boolean,
-    Socket: Socket
+    isPlaying:boolean,
+    socket:Socket
 }
 
-interface State {
-    username: string
-}
+export class CanvasComponent extends Component<props> {
 
-class CanvasPaint extends Component<props> {
-
-    public state: State;
     public canvas: any;
     public canvasReceived: any;
 
     constructor(props) {
         super(props);
-        this.state = {
-            username: ""
+        
+        this.props.socket.on("draw:upated", this.onDrawing);
+    }
+
+    sendPath = (action:number,path:Path|Path[]|null) => {
+        this.props.socket.emit("draw:update",{action:action,data:path})
+    }
+
+    /*
+        Aquí llega cuando un jugador está dibujando
+    */
+    onDrawing = (data) => {
+        if(!this.props.isPlaying){
+            console.log(data.action)
+            if(data.action == 1){ //nuevo trazo
+                this.canvasReceived.addPath(data.data)
+            }
+            if(data.action =|= 2){ // un paos atras
+                this.canvasReceived.undo()
+            }
+            if(data.action == 3){ // borrar todo
+                this.canvasReceived.clear()
+            }
         }
-        this.props.Socket.on("draw:upated", this.dataCanvasRecived); 
     }
 
-    dataCanvasSend = () => {
-        this.props.Socket.emit("draw:update", {element:this.canvas._sketchCanvas._paths});
-    }
-
-    dataCanvasRecived = (data) => {
-        this.canvasReceived.addPath(data);
-    }
-    
     render() {
-        if(this.props.pintor){
+        if(this.props.isPlaying){
             return (
                 <View style={styles.container}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -51,20 +59,29 @@ class CanvasPaint extends Component<props> {
                             canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
                             defaultStrokeIndex={0}
                             defaultStrokeWidth={5}
-                            undoComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Undo</Text></View>}
-                            clearComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Clear</Text></View>}
-                            eraseComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Eraser</Text></View>}
+                            undoComponent={
+                                <TouchableOpacity style={styles.functionButton} onPress={() => this.sendPath(2,[])}>
+                                    <Text style={{ color: 'white' }}>
+                                        Undo
+                                    </Text>
+                                </TouchableOpacity>
+                            }
+                            clearComponent={
+                            <TouchableOpacity onPress={() => this.sendPath(3,[])} style={styles.functionButton}>
+                                <Text style={{ color: 'white' }}>
+                                    Clear
+                                </Text>
+                            </TouchableOpacity>
+                            }
                             strokeComponent={color => (
                                 <View style={[{ backgroundColor: color }, styles.strokeColorButton]} />
                             )}
                             strokeSelectedComponent={(color) => {
-                                console.log(color)
                                 return (
                                     <View style={[{ backgroundColor: color, borderWidth: 2 }, styles.strokeColorButton]} />
                                 )
                             }}
                             strokeWidthComponent={(w) => {
-                                console.log(w)
                                 return (<View style={styles.strokeWidthButton}>
                                     <View style={{
                                         backgroundColor: 'white', marginHorizontal: 2.5,
@@ -73,10 +90,11 @@ class CanvasPaint extends Component<props> {
                                 )
                             }}
                             ref = {ref => this.canvas = ref}
-                            onPathsChange = {()=>{this.canvas._sketchCanvas._paths.forEach(element => {
-                                    this.dataCanvasSend()
-                                    console.log(element)
-                            });console.log("hola")}}
+                            onPathsChange = {()=>{
+
+                                if(this.canvas._sketchCanvas._paths[this.canvas._sketchCanvas._paths.length-1])
+                                this.sendPath(1,this.canvas._sketchCanvas._paths[this.canvas._sketchCanvas._paths.length-1])
+                            }}
                         />    
                     </View>
                 </View>
@@ -113,8 +131,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#39579A', justifyContent: 'center', alignItems: 'center', borderRadius: 5,
     }
 });
-
-const mapStateTOprops = (state: any) => {
-    return getStore(state);
-}
-export default connect(mapStateTOprops)(CanvasPaint);

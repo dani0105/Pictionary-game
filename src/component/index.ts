@@ -1,5 +1,7 @@
-import { ChatComponent } from "./ChatComponent";
+import { CanvasComponent } from './CanvasComponent';
+import { ChatComponent } from './ChatComponent';
 
 export {
-    ChatComponent
+    ChatComponent,
+    CanvasComponent
 };

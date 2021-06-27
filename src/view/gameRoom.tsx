@@ -4,13 +4,10 @@ import {
     Text,
     View
 } from 'react-native';
-import { getStore } from "../service";
-import { connect } from "react-redux";
 import { lang } from '../i18n/lang';
 import { Socket } from 'socket.io-client';
-import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
-import CanvasPaint from './canvas';
-import { ChatComponent } from '../component';
+import { CanvasComponent, ChatComponent } from '../component';
+import { Path } from '@terrylinla/react-native-sketch-canvas';
 
 interface props {
     idRoom: number
@@ -65,7 +62,7 @@ export class GameRoom extends Component<props> {
         }
     }
 
-    // aqu´llega toda la informacion del la sal
+    // aqui llega toda la informacion del la sala
     onGotRoom = (data)=> {
         this.setState({
             currentRound:data.currentRound,
@@ -203,7 +200,7 @@ export class GameRoom extends Component<props> {
                     </View>
                 </View>
                 <View style={{height:'60%'}}>
-                    <CanvasPaint pintor={this.state.isPlaying} Socket={this.props.Socket} />
+                    <CanvasComponent socket={this.props.Socket} isPlaying={this.state.isPlaying} />
                     {/* <CanvasPaint/> Aquí va el componente del canvas */}
                 </View>
                 <View style={{height:'40%'}}>
