@@ -35,6 +35,7 @@ class JoinRoom extends Component<any> {
         //Send request to the socket
         this.props.Socket.emit("room:connect", {
             id:this.state.roomCode,
+            name:this.props.Auth.data,
             password:this.state.roomPassword
         })
         //Listen response from the socket

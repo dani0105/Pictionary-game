@@ -55,7 +55,7 @@ class CreateRoom extends Component<any> {
             lang: this.state.lang,
             password: this.state.password,
             public: this.state.public,
-            owner: this.props.Auth.username,
+            owner: this.props.Auth.data,
             round: this.state.round,
             time: this.state.time,
             randomWords: this.state.randomWord,
@@ -103,6 +103,7 @@ class CreateRoom extends Component<any> {
                                             selectedValue={this.state.maxPlayer.toString()} >
                                             <Picker.Item label="4 Jugadores" value="4" style={{fontFamily:'FredokaOne-Regular'}} />
                                             <Picker.Item label="8 Jugadores" value="8" />
+                                            <Picker.Item label="6 Jugadores" value="6" />
                                         </Picker>
                                     </View>
                                 </View>

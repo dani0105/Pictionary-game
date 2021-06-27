@@ -11,9 +11,9 @@ import { connect } from "react-redux";
 import RNSketchCanvas, { Path, SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
 import { Socket } from 'socket.io-client';
 
-interface props{
-    isPlaying:boolean,
-    socket:Socket
+interface props {
+    isPlaying: boolean,
+    socket: Socket
 }
 
 export class CanvasComponent extends Component<props> {
@@ -23,16 +23,15 @@ export class CanvasComponent extends Component<props> {
 
     constructor(props) {
         super(props);
-        
         this.props.socket.on("draw:upated", this.onDrawing);
     }
 
-    sendPath = (action:number,path:Path|Path[]|null) => {
-        this.props.socket.emit("draw:update",{action:action,data:path})
-        if(action == 2){ // un paos atras
+    sendPath = (action: number, path: Path | Path[] | null) => {
+        this.props.socket.emit("draw:update", { action: action, data: path })
+        if (action == 2) { // un paos atras
             this.canvas.undo()
         }
-        if(action == 3){ // borrar todo
+        if (action == 3) { // borrar todo
             this.canvas.clear()
         }
     }
@@ -41,42 +40,45 @@ export class CanvasComponent extends Component<props> {
         Aquí llega cuando un jugador está dibujando
     */
     onDrawing = (data) => {
-        if(!this.props.isPlaying){
-            if(data.action == 1){ //nuevo trazo
+        
+        if (!this.props.isPlaying) {
+            if(data.data)
+                return
+            if (data.action == 1) { //nuevo trazo
                 this.canvasReceived.addPath(data.data)
             }
-            if(data.action == 2){ // un paos atras
+            if (data.action == 2) { // un paos atras
                 this.canvasReceived.undo()
             }
-            if(data.action == 3){ // borrar todo
+            if (data.action == 3) { // borrar todo
                 this.canvasReceived.clear()
             }
         }
     }
 
     render() {
-        if(this.props.isPlaying){
-            return (
-                <View style={styles.container}>
-                    <View style={{ flex: 1, flexDirection: 'row' }}>
+        return (
+            <View style={styles.container}>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    {this.props.isPlaying ? (
                         <RNSketchCanvas
                             containerStyle={{ backgroundColor: 'transparent', flex: 1 }}
                             canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
                             defaultStrokeIndex={0}
                             defaultStrokeWidth={5}
                             undoComponent={
-                                <TouchableOpacity style={styles.functionButton} onPress={() => this.sendPath(2,[])}>
+                                <TouchableOpacity style={styles.functionButton} onPress={() => this.sendPath(2, [])}>
                                     <Text style={{ color: 'white' }}>
                                         Undo
                                     </Text>
                                 </TouchableOpacity>
                             }
                             clearComponent={
-                            <TouchableOpacity onPress={() => this.sendPath(3,[])} style={styles.functionButton}>
-                                <Text style={{ color: 'white' }}>
-                                    Clear
-                                </Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.sendPath(3, [])} style={styles.functionButton}>
+                                    <Text style={{ color: 'white' }}>
+                                        Clear
+                                    </Text>
+                                </TouchableOpacity>
                             }
                             strokeComponent={color => (
                                 <View style={[{ backgroundColor: color }, styles.strokeColorButton]} />
@@ -90,33 +92,27 @@ export class CanvasComponent extends Component<props> {
                                 return (<View style={styles.strokeWidthButton}>
                                     <View style={{
                                         backgroundColor: 'white', marginHorizontal: 2.5,
-                                        width: Math.sqrt(w / 3) * 10, height: Math.sqrt(w / 3) * 10, borderRadius: Math.sqrt(w / 3) * 10 / 2}} />
+                                        width: Math.sqrt(w / 3) * 10, height: Math.sqrt(w / 3) * 10, borderRadius: Math.sqrt(w / 3) * 10 / 2
+                                    }} />
                                 </View>
                                 )
                             }}
-                            ref = {ref => this.canvas = ref}
-                            onPathsChange = {()=>{
+                            ref={ref => this.canvas = ref}
+                            onPathsChange={() => {
 
-                                if(this.canvas._sketchCanvas._paths[this.canvas._sketchCanvas._paths.length-1])
-                                this.sendPath(1,this.canvas._sketchCanvas._paths[this.canvas._sketchCanvas._paths.length-1])
+                                if (this.canvas._sketchCanvas._paths[this.canvas._sketchCanvas._paths.length - 1])
+                                    this.sendPath(1, this.canvas._sketchCanvas._paths[this.canvas._sketchCanvas._paths.length - 1])
                             }}
-                        />    
-                    </View>
-                </View>
-            );
-        }else{
-            return (
-                <View style={styles.container}>
-                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                        <SketchCanvas
-                            touchEnabled = {false}
-                            style={{ flex: 1 }}
-                            ref = {ref => this.canvasReceived = ref}
                         />
-                    </View>
+                    ) : (<SketchCanvas
+                        touchEnabled={false}
+                        style={{ flex: 1 }}
+                        ref={ref => this.canvasReceived = ref}
+                    />)}
+
                 </View>
-            );
-        }
+            </View>
+        );
     }
 }
 

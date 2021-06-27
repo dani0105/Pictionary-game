@@ -22,7 +22,6 @@ class DashBoard extends Component<any> {
     createRoom = () => {
         //Start the game
         this.props.navigation.push('CreateRoom')
-        Alert.alert("Final");
     } 
 
     joinRoom = () => {
