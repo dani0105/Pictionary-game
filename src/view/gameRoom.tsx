@@ -212,7 +212,7 @@ export class GameRoom extends Component<props> {
                             <Text style={{textAlign:'center', marginTop:15}}>
                                 {this.state.currentWord}
                             </Text>
-                            <Text style={{textAlign:'center', marginTop:15}}>
+                            <Text style={{ textAlign:'center', marginTop:15}}>
                                 Ranking
                             </Text>
                             <FlatList
@@ -243,11 +243,11 @@ export class GameRoom extends Component<props> {
                 </Modal>
                 <View style={styles.header}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Text style={{ fontWeight: "500" }}>{lang.roomId}: {this.props.idRoom}</Text>
-                        <Text style={{ fontWeight: "500", marginLeft: 10 }}>
+                        <Text style={{ fontFamily:"Montserrat-Medium", fontWeight: "500" }}>{lang.roomId}: {this.props.idRoom}</Text>
+                        <Text style={{ fontFamily:"Montserrat-Medium", fontWeight: "500", marginLeft: 10 }}>
                             {lang.roomRound} {this.state.currentRound}/{this.state.totalRounds}
                         </Text>
-                        <Text style={{ fontWeight: "500", marginLeft: 10 }}>
+                        <Text style={{ fontFamily:"Montserrat-Medium", fontWeight: "500", marginLeft: 10 }}>
                             {lang.time} {this.state.timer}
                         </Text>
                     </View>
