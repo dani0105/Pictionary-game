@@ -10,7 +10,7 @@ import { lang } from '../i18n/lang';
 import { Socket } from 'socket.io-client';
 import { TOUCHABLE_STATE } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
 import CanvasPaint from './canvas';
-import ChatText from './chat';
+import { ChatComponent } from '../component';
 
 interface props {
     idRoom: number
@@ -29,6 +29,7 @@ interface State {
     totalRounds:number,
     timer:number,
     timeIntervale:any|null;
+    messages:any[]
 }
 
 export class GameRoom extends Component<props> {
@@ -47,6 +48,7 @@ export class GameRoom extends Component<props> {
             wordLength:0,
             totalRounds:0,
             timer:0,
+            messages:[],
             timeIntervale:null
         }
 
@@ -118,7 +120,34 @@ export class GameRoom extends Component<props> {
         Aqui llega los mensajes del chat
     */
     onChatReceive = (data) => {
-        console.log(data)
+        var username;
+        var message;
+        if(data.action){
+            username = data.message;
+            switch (data.action) {
+                case 1:
+                    message = "se conecto"
+                    break;
+                case 2:
+                    message = "se desconecto"
+                    break;
+                case 3:
+                    message = "está dibujando"
+                    break;
+                case 4:
+                    message = "respuesta correcta"
+                    break;
+            }
+        }else{
+            username = data.username
+            message = data.message
+        }
+
+        this.setState({
+            messages: [{
+                username:username,message:message,id:data.id
+            }] .concat(this.state.messages)
+        })
     }
 
     /*
@@ -134,6 +163,10 @@ export class GameRoom extends Component<props> {
         if(this.state.timer <= 0){
             clearInterval(this.state.timeIntervale);
         }
+    }
+
+    sendMessage = (message:string) => {
+        this.props.Socket.emit("chat:send",{username:"prueba",message:message})
     }
 
     preRound = (data) => {
@@ -169,23 +202,12 @@ export class GameRoom extends Component<props> {
 
                     </View>
                 </View>
-                <View style={{
-                    flexDirection: "row",
-                    height: 450,
-                    width: 395,
-                    padding: 20
-                }}>
+                <View style={{height:'60%'}}>
                     <CanvasPaint/>
-                    {/* Aquí va el componente del canvas */}
+                    {/* <CanvasPaint/> Aquí va el componente del canvas */}
                 </View>
-                <View style={{
-                    flexDirection: "row",
-                    height: 450,
-                    width: 395,
-                    padding: 20
-                }}>
-                    <ChatText/>
-                    {/* Aquí va el componente del chat*/}
+                <View style={{height:'40%'}}>
+                    <ChatComponent sendMessage={this.sendMessage} messages={this.state.messages} />
                 </View>
             </View>
         );

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { lang } from './i18n/lang';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CanvasPaint, ChatText, CreateRoom, DashBoard, GameRoom, JoinRoom, Login } from './view/index'
+import { CanvasPaint, CreateRoom, DashBoard, GameRoom, JoinRoom, Login } from './view/index'
 import {
     AppRegistry,
     StyleSheet,
@@ -41,7 +41,6 @@ export class App extends React.Component<any> {
                             <generalStack.Screen name="JoinRoom" component={JoinRoom}/>
                             <generalStack.Screen name="DashBoard" component={DashBoard}/>
                             <generalStack.Screen name="GameRoom" component={GameRoom}/>
-                            <generalStack.Screen name="ChatText" component={ChatText}/>
                             <generalStack.Screen name="CanvasPaint" component={CanvasPaint}/>
                         </generalStack.Navigator>
                     </NavigationContainer>
