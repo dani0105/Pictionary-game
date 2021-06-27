@@ -63,7 +63,7 @@ class JoinRoom extends Component<any> {
     }
 
     onFinishGame = () => {
-
+        this.setState({roomId:-1});
     }
 
 

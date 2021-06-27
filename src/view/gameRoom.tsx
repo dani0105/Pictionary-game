@@ -198,17 +198,17 @@ export class GameRoom extends Component<props> {
                 style={styles.tinyLogo}
                 source={require('../assets/Estrella.png')}
             />
-            <Text style={{marginTop:5}}>{item.name} {'U+279C'} </Text>
-            <Text style={{marginTop:5}}>{item.points}</Text>
+            <Text style={{marginLeft:20, marginTop:15}}>{item.name} {'->'} </Text>
+            <Text style={{marginTop:15}}>{item.points}</Text>
         </View>
     );
 
     render() {
         return (
             <View>
-                <Modal animationType="slide" transparent={true} visible={this.state.isPreRound} style={{maxHeight:'50%', maxWidth:'50%', flex:1, justifyContent: "center", alignItems: "center"}}>
-                    <View style={{ flex: 1, alignItems: "center", justifyContent: 'center'}}>
-                        <View style={{backgroundColor:'white',borderRadius:10}}>
+                <Modal animationType="slide" transparent={true} visible={this.state.isPreRound}>
+                    <View style={{flex: 1, alignItems: "center", justifyContent: 'center'}}>
+                        <View style={{backgroundColor:'white',borderRadius:10, height:'80%', width:'80%', }}>
                             <Text style={{textAlign:'center', marginTop:15}}>
                                 {this.state.currentWord}
                             </Text>
@@ -217,7 +217,15 @@ export class GameRoom extends Component<props> {
                             </Text>
                             <FlatList
                                 style={{display:'flex', flexDirection:'column', height:'100%', margin:15}}
-                                data={this.state.players}
+                                data={this.state.players.sort((n1,n2) => {
+                                    if (n1.points > n2.points) {
+                                        return 1;
+                                    }                                
+                                    if (n1.points < n2.points) {
+                                        return -1;
+                                    }                               
+                                    return 0;
+                                })}
                                 renderItem={this.renderItem}
                                 keyExtractor={item => item.id}
                             />
@@ -282,7 +290,7 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 20,
         padding: 10,
-        marginTop: 5,
+        margin: 20,
         backgroundColor: '#F73602',
     }
 });
