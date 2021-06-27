@@ -40,7 +40,7 @@ export class CanvasComponent extends Component<props> {
             if(data.action == 1){ //nuevo trazo
                 this.canvasReceived.addPath(data.data)
             }
-            if(data.action =|= 2){ // un paos atras
+            if(data.action == 2){ // un paos atras
                 this.canvasReceived.undo()
             }
             if(data.action == 3){ // borrar todo
