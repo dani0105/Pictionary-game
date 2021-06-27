@@ -29,6 +29,12 @@ export class CanvasComponent extends Component<props> {
 
     sendPath = (action:number,path:Path|Path[]|null) => {
         this.props.socket.emit("draw:update",{action:action,data:path})
+        if(action == 2){ // un paos atras
+            this.canvas.undo()
+        }
+        if(action == 3){ // borrar todo
+            this.canvas.clear()
+        }
     }
 
     /*
@@ -36,11 +42,10 @@ export class CanvasComponent extends Component<props> {
     */
     onDrawing = (data) => {
         if(!this.props.isPlaying){
-            console.log(data.action)
             if(data.action == 1){ //nuevo trazo
                 this.canvasReceived.addPath(data.data)
             }
-            if(data.action =|= 2){ // un paos atras
+            if(data.action == 2){ // un paos atras
                 this.canvasReceived.undo()
             }
             if(data.action == 3){ // borrar todo

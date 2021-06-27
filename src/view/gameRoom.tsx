@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    Modal,
     StyleSheet,
     Text,
     View
@@ -13,20 +14,22 @@ interface props {
     idRoom: number
     onFinish: () => void,
     Socket: Socket,
-    isJoin:boolean
+    isJoin: boolean
 }
 
 interface State {
     isPlaying: boolean,
     word: number,
     wordToPaint: string | null,
-    players:any[],
-    currentRound:number,
-    wordLength:number,
-    totalRounds:number,
-    timer:number,
-    timeIntervale:any|null;
-    messages:any[]
+    players: any[],
+    currentRound: number,
+    wordLength: number,
+    totalRounds: number,
+    timer: number,
+    timeIntervale: any | null;
+    messages: any[],
+    isPreRound: boolean,
+    currentWord: string
 }
 
 export class GameRoom extends Component<props> {
@@ -40,13 +43,15 @@ export class GameRoom extends Component<props> {
             word: 4,
             wordToPaint: null,
             isPlaying: false,
-            players:[],
-            currentRound:0,
-            wordLength:0,
-            totalRounds:0,
-            timer:0,
-            messages:[],
-            timeIntervale:null
+            players: [],
+            currentRound: 0,
+            wordLength: 0,
+            isPreRound: false,
+            totalRounds: 0,
+            timer: 0,
+            currentWord: "",
+            messages: [],
+            timeIntervale: null
         }
 
         this.props.Socket.on("preround", this.preRound);
@@ -57,20 +62,20 @@ export class GameRoom extends Component<props> {
         this.props.Socket.on("room:deleted", this.onFinish);
         this.props.Socket.on("word", this.onWord);
         this.stopwatch = this.stopwatch.bind(this);
-        if(this.props.isJoin){
+        if (this.props.isJoin) {
             this.props.Socket.emit("room:get");
         }
     }
 
     // aqui llega toda la informacion del la sala
-    onGotRoom = (data)=> {
+    onGotRoom = (data) => {
         this.setState({
-            currentRound:data.currentRound,
-            wordLength:data.wordLength,
-            totalRounds:data.totalRounds,
-            timer:data.timer,
-            timeIntervale:setInterval(this.stopwatch,1000),
-            players:data.players
+            currentRound: data.currentRound,
+            wordLength: data.wordLength,
+            totalRounds: data.totalRounds,
+            timer: data.timer,
+            timeIntervale: setInterval(this.stopwatch, 1000),
+            players: data.players
         });
     }
 
@@ -89,27 +94,27 @@ export class GameRoom extends Component<props> {
     onRound = (data) => {
         clearInterval(this.state.timeIntervale)
         this.setState({
-            currentRound:data.currentRound,
-            wordLength:data.wordLength,
-            totalRounds:data.totalRounds,
-            timer:data.timer,
-            timeIntervale:setInterval(this.stopwatch,1000)
+            currentRound: data.currentRound,
+            wordLength: data.wordLength,
+            totalRounds: data.totalRounds,
+            timer: data.timer,
+            timeIntervale: setInterval(this.stopwatch, 1000)
         });
     }
 
     /*
         Aqui llega la informacion de los jugadores, se llama cada vez que un usuario acierta o se une.
     */
-    onPlayerUpdate = (data:any) => {
+    onPlayerUpdate = (data: any) => {
         var isPlaying = false;
         data.players.forEach(element => {
-            if(element.id == this.props.Socket.id){
+            if (element.id == this.props.Socket.id) {
                 isPlaying = element.isDrawing;
             }
         })
         this.setState({
-            players:data.players,
-            isPlaying:isPlaying
+            players: data.players,
+            isPlaying: isPlaying
         });
     }
 
@@ -119,7 +124,7 @@ export class GameRoom extends Component<props> {
     onChatReceive = (data) => {
         var username;
         var message;
-        if(data.action){
+        if (data.action) {
             username = data.message;
             switch (data.action) {
                 case 1:
@@ -135,15 +140,15 @@ export class GameRoom extends Component<props> {
                     message = "respuesta correcta"
                     break;
             }
-        }else{
+        } else {
             username = data.username
             message = data.message
         }
 
         this.setState({
             messages: [{
-                username:username,message:message,id:data.id
-            }] .concat(this.state.messages)
+                username: username, message: message, id: data.id
+            }].concat(this.state.messages)
         })
     }
 
@@ -156,23 +161,38 @@ export class GameRoom extends Component<props> {
     }
 
     stopwatch = () => {
-        this.setState({timer:this.state.timer-1});
-        if(this.state.timer <= 0){
+        this.setState({ timer: this.state.timer - 1 });
+        if (this.state.timer <= 0) {
             clearInterval(this.state.timeIntervale);
         }
     }
 
-    sendMessage = (message:string) => {
-        this.props.Socket.emit("chat:send",{username:"prueba",message:message})
+    sendMessage = (message: string) => {
+        this.props.Socket.emit("chat:send", { username: "prueba", message: message })
     }
 
     preRound = (data) => {
-        // aqui se mostraría los resultados de la ronda que se jugo
+        console.log("pre round", data)
+        this.setState({ isPlaying: false, isPreRound: true, currentWord: data.word })
+        setTimeout(() => this.setState({ isPreRound: false }), data.preRound)
     }
 
     render() {
         return (
             <View>
+                <Modal animationType="slide" transparent={true} visible={this.state.isPreRound}>
+                    <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }}>
+                        <View style={{backgroundColor:'white',borderRadius:10,}}>
+                            <Text>
+                                {this.state.currentWord}
+                            </Text>
+                            <Text>
+                                Ranking
+                            </Text>
+                        </View>
+
+                    </View>
+                </Modal>
                 <View style={styles.header}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
                         <Text style={{ fontWeight: "500" }}>{lang.roomId}: {this.props.idRoom}</Text>
@@ -199,11 +219,11 @@ export class GameRoom extends Component<props> {
 
                     </View>
                 </View>
-                <View style={{height:'60%'}}>
+                <View style={{ height: '60%' }}>
                     <CanvasComponent socket={this.props.Socket} isPlaying={this.state.isPlaying} />
                     {/* <CanvasPaint/> Aquí va el componente del canvas */}
                 </View>
-                <View style={{height:'40%'}}>
+                <View style={{ height: '40%' }}>
                     <ChatComponent sendMessage={this.sendMessage} messages={this.state.messages} />
                 </View>
             </View>
