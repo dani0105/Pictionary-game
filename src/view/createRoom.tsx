@@ -64,7 +64,7 @@ class CreateRoom extends Component<any> {
     }
 
     onFinishGame = () => {
-
+        this.setState({roomId:-1});
     }
 
     render() {

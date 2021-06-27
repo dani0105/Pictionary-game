@@ -218,10 +218,10 @@ export class GameRoom extends Component<props> {
                             <FlatList
                                 style={{display:'flex', flexDirection:'column', height:'100%', margin:15}}
                                 data={this.state.players.sort((n1,n2) => {
-                                    if (n1.points > n2.points) {
+                                    if (n1.points < n2.points) {
                                         return 1;
                                     }                                
-                                    if (n1.points < n2.points) {
+                                    if (n1.points > n2.points) {
                                         return -1;
                                     }                               
                                     return 0;
