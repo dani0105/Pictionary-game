@@ -21,5 +21,6 @@
     "roomTime":"Round time",
     "roomId":"Room number",
     "time":"Tiempo",
-    "waiting":"Waiting for players"
+    "waiting":"Waiting for players",
+    "writeMessage":"Answer..."
 }

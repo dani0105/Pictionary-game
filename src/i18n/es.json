@@ -21,5 +21,6 @@
     "roomTime":"Tiempo del turno",
     "roomId":"Numero de sala",
     "time":"Tiempo",
-    "waiting":"Esperando jugadores"
+    "waiting":"Esperando jugadores",
+    "writeMessage":"Respuesta..."
 }

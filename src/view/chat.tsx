@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
+import { lang } from '../i18n/lang';
 import {
+    FlatList,
+    SafeAreaView,
     StyleSheet,
     Text,
+    TextInput,
     View
 } from 'react-native';
 import { getStore } from "../service";
 import { connect } from "react-redux";
-import { GiftedChat } from 'react-native-gifted-chat';
-import { Header } from 'react-native-elements';
+
+interface props{
+    message:any
+}
 
 interface State {
     username: string,
-    messages: []
+    message: string,
+    messages: Array<any>
 }
-
-class ChatText extends Component<any, any> {
+  class ChatText extends Component<any, any> {
 
     public state: State;
 
@@ -22,60 +28,48 @@ class ChatText extends Component<any, any> {
         super(props);
         this.state = {
             username: this.props.Auth.data,
+            message: "",
             messages: []
         };
     }
 
-    onSend(messages = []) {
-        console.log(this.props.Auth.data);
+    onSendLocal = () => {
+        console.log(this.state.message);
         console.log(this.state.username);
-        this.setState(previousState => ({
-          messages: GiftedChat.append(previousState.messages, messages),
-        }));
+        var messages = {username:this.state.username, msg:this.state.message};
+        this.props.Socket.emit("chat:send", messages);
+        this.setState({message:""})
     }
-
-    UNSAFE_componentWillMount() {
-        this.setState({
-          messages: [
-            {
-              _id: 1,
-              text: 'Hola, ¿en qué puedo ayudarte?',
-              createdAt: new Date(),
-              user: {
-                _id: 2,
-                name: "React Native"
-              },
-            },
-            {
-                _id: 2,
-                text: 'ESOOOO DANIEL',
-                createdAt: new Date(),
-                user: {
-                  _id: 3,
-                  name: "LEANDRO VASQUEZ"
-                },
-              },
-          ],
-        });
-      }
-
-
+    
+    renderItem = ({ item }) => (
+        <View style={styles.item}>
+          <Text style={styles.title}>{this.state.username}</Text>
+          <Text style={styles.title}>{item.title}</Text>
+        </View>
+    );
+    
     render() {
         return (
             <View style={styles.container}>
-               <Header
-                    backgroundColor="#233978"
-                    centerComponent={{ text: 'Chat', style: { color: '#fff' } }}
-                />
-
-                <GiftedChat
-                    messages={this.state.messages}
-                    onSend={messages => this.onSend(messages)}
-                    user={{
-                        _id: 1,
-                        name: this.state.username
-                    }}
-                />
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.container}>
+                        <FlatList
+                            data={this.state.messages}
+                            renderItem={this.renderItem}
+                        />
+                    </View>
+                    <View style={styles.container}>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(value) => {
+                                this.setState({message:value});
+                            }}
+                            value={this.state.message}
+                            placeholder={lang.writeMessage}
+                            onSubmitEditing={this.onSendLocal}
+                        />
+                    </View>
+                </SafeAreaView>
             </View>
         );
     }
@@ -84,6 +78,20 @@ class ChatText extends Component<any, any> {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+    },
+    title: {
+        fontSize: 32,
+    },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
     }
 });
 
