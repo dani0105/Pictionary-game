@@ -169,11 +169,21 @@ export class GameRoom extends Component<props> {
 
                     </View>
                 </View>
-                <View>
+                <View style={{
+                    flexDirection: "row",
+                    height: 450,
+                    width: 395,
+                    padding: 20
+                }}>
                     <CanvasPaint/>
                     {/* Aquí va el componente del canvas */}
                 </View>
-                <View>
+                <View style={{
+                    flexDirection: "row",
+                    height: 450,
+                    width: 395,
+                    padding: 20
+                }}>
                     <ChatText/>
                     {/* Aquí va el componente del chat*/}
                 </View>
