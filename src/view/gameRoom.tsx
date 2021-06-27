@@ -125,6 +125,7 @@ export class GameRoom extends Component<props> {
     onChatReceive = (data) => {
         var username;
         var message;
+        console.log("mensajes",data)
         if (data.action) {
             username = data.message;
             switch (data.action) {
