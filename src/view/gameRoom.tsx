@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
     FlatList,
+    Image,
     Modal,
+    Pressable,
     StyleSheet,
     Text,
     View
@@ -31,7 +33,8 @@ interface State {
     timeIntervale: any | null;
     messages: any[],
     isPreRound: boolean,
-    currentWord: string
+    currentWord: string,
+    finish: boolean
 }
 
 export class GameRoom extends Component<props> {
@@ -53,7 +56,8 @@ export class GameRoom extends Component<props> {
             timer: 0,
             currentWord: "",
             messages: [],
-            timeIntervale: null
+            timeIntervale: null,
+            finish: false
         }
 
         this.props.Socket.on("preround", this.preRound);
@@ -167,6 +171,7 @@ export class GameRoom extends Component<props> {
         this.props.Socket.off("room:got", this.onGotRoom);
         this.props.Socket.off("room:deleted", this.onFinish);
         this.props.Socket.off("word", this.onWord);
+        this.setState({finish:true, isPreRound: true, currentWord: data.word});
         this.props.onFinish();
     }
 
@@ -189,31 +194,43 @@ export class GameRoom extends Component<props> {
 
     renderItem = ({ item }) => (
         <View style={{ display: 'flex', flexDirection: 'row' }}>
-            <Text>{item.username}: </Text>
-            <Text>{item.points}: </Text>
+            <Image
+                style={styles.tinyLogo}
+                source={require('../assets/Estrella.png')}
+            />
+            <Text style={{marginTop:5}}>{item.name} {'U+279C'} </Text>
+            <Text style={{marginTop:5}}>{item.points}</Text>
         </View>
     );
 
     render() {
         return (
             <View>
-                <Modal animationType="slide" transparent={true} visible={this.state.isPreRound}>
-                    <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }}>
-                        <View style={{backgroundColor:'white',borderRadius:10,}}>
-                            <Text>
+                <Modal animationType="slide" transparent={true} visible={this.state.isPreRound} style={{maxHeight:'50%', maxWidth:'50%', flex:1, justifyContent: "center", alignItems: "center"}}>
+                    <View style={{ flex: 1, alignItems: "center", justifyContent: 'center'}}>
+                        <View style={{backgroundColor:'white',borderRadius:10}}>
+                            <Text style={{textAlign:'center', marginTop:15}}>
                                 {this.state.currentWord}
                             </Text>
-                            <Text>
+                            <Text style={{textAlign:'center', marginTop:15}}>
                                 Ranking
                             </Text>
                             <FlatList
-                                style={{display:'flex',flexDirection:'column',height:'100%'}}
+                                style={{display:'flex', flexDirection:'column', height:'100%', margin:15}}
                                 data={this.state.players}
                                 renderItem={this.renderItem}
                                 keyExtractor={item => item.id}
                             />
+                            {this.state.finish ? (
+                            <Pressable
+                                style={styles.button}
+                                onPress={this.props.onFinish}>
+                                <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                                textAlign: "center", marginRight: 10}}>
+                                    {lang.exit}
+                                </Text>
+                            </Pressable>):(null)}       
                         </View>
-
                     </View>
                 </Modal>
                 <View style={styles.header}>
@@ -239,7 +256,6 @@ export class GameRoom extends Component<props> {
                                     </Text>))}
                             </Text>
                         )}
-
                     </View>
                 </View>
                 <View style={{ height: '60%' }}>
@@ -258,5 +274,15 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#FFCC1C',
         padding: 5
+    },
+    tinyLogo: {
+        width: 50,
+        height: 50,
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        marginTop: 5,
+        backgroundColor: '#F73602',
     }
 });

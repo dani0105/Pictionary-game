@@ -23,5 +23,6 @@
     "roomId":"Numero de sala",
     "time":"Tiempo",
     "waiting":"Esperando jugadores",
-    "writeMessage":"Respuesta..."
+    "writeMessage":"Respuesta...",
+    "exit":"Salir"
 }

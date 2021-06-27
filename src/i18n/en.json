@@ -23,5 +23,6 @@
     "roomId":"Room number",
     "time":"Tiempo",
     "waiting":"Waiting for players",
-    "writeMessage":"Answer..."
+    "writeMessage":"Answer...",
+    "exit":"Exit"
 }
