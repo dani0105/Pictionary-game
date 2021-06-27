@@ -74,9 +74,11 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     input: {
-        height: 40,
+        height: 50,
+        width: 200,
         margin: 5,
-        fontFamily:"FredokaOne-Regular"
+        fontFamily:"FredokaOne-Regular",
+        fontSize: 14
     },
     backgroundImage:{
         flex : 1,

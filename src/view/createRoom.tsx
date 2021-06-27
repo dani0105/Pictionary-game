@@ -134,7 +134,7 @@ class CreateRoom extends Component<any> {
                                 <View style={{ paddingTop:35 }}>
                                     <TouchableOpacity
                                         style={{
-                                            alignItems: 'center', backgroundColor: '#DDDDDD',
+                                            alignItems: 'center', backgroundColor: "#2196F3",
                                             padding: 10, borderRadius:30
                                         }}
                                         onPress={this.createRoom}
