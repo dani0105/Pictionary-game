@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getStore } from "../service";
 import { connect } from "react-redux";
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
 import { lang } from '../i18n/lang';
 import NumericInput from 'react-native-numeric-input';
 import { Picker } from '@react-native-picker/picker';
@@ -74,7 +74,7 @@ class CreateRoom extends Component<any> {
         } else
             return (
                 <SafeAreaView style={styles.container}>
-                    <ImageBackground source={require('../assets/Fondo_Pictionary_2.png')} style={styles.backgroundImage}>
+                    <ImageBackground source={require('../assets/Fondo_Pictionary.png')} style={styles.backgroundImage}>
                         <View style={styles.formContainer}>
                             <View>
                                 <View style={{ flexDirection: 'row' }}>
@@ -118,7 +118,7 @@ class CreateRoom extends Component<any> {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ height: '100%', width: 110 }}>
-                                        <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:17}}>{lang.roomTime}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:17, textAlign:"center"}}>{lang.roomTime}</Text>
                                     </View>
                                     <View>
                                         <Picker
@@ -131,6 +131,17 @@ class CreateRoom extends Component<any> {
                                         </Picker>
                                     </View>
                                 </View>
+
+                                <View style={{flexDirection: "row", alignItems: "center", paddingTop:15 }}>
+                                    <Text style={styles.textStyle}>
+                                        {lang.password}
+                                    </Text>
+                                    <TextInput style={{height: 50, width: 200, paddingLeft: 1, fontFamily:"FredokaOne-Regular", fontSize: 12}} 
+                                    placeholder={lang.password_input_create} placeholderTextColor="#FFFFFF"
+                                    onChangeText={(value:string) => this.setState({password: value})}>
+                                    </TextInput>
+                                </View>
+
                                 <View style={{ paddingTop:35 }}>
                                     <TouchableOpacity
                                         style={{
@@ -139,9 +150,11 @@ class CreateRoom extends Component<any> {
                                         }}
                                         onPress={this.createRoom}
                                     >
-                                        <Text style={{fontFamily:"FredokaOne-Regular", fontSize:18 }}>{lang.createRoom}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", fontSize:18, color:"white" }}>{lang.createRoom}</Text>
                                     </TouchableOpacity>
                                 </View>
+
+                                
                             </View>
 
                         </View>
@@ -170,6 +183,20 @@ const styles = StyleSheet.create({
         width: '70%',
         borderRadius: 5,
         padding: 10
+    },
+    textStyle: {
+        fontSize: 18,
+        fontFamily:"FredokaOne-Regular",
+        color: "black",
+        textAlign: "center",
+        marginRight: 10
+    },
+    input: {
+        height: 50,
+        width: 200,
+        margin: 5,
+        fontFamily:"FredokaOne-Regular",
+        fontSize: 14
     }
 });
 
