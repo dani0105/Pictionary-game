@@ -79,7 +79,7 @@ class CreateRoom extends Component<any> {
                             <View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ height: '100%', width: 110 }}>
-                                        <Text>{lang.roomLang}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:18}}>{lang.roomLang}</Text>
                                     </View>
                                     <View>
                                         <Picker
@@ -94,14 +94,14 @@ class CreateRoom extends Component<any> {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ height: '100%', width: 110 }}>
-                                        <Text>{lang.roomMaxPlayers}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:18}}>{lang.roomMaxPlayers}</Text>
                                     </View>
                                     <View>
                                         <Picker
                                             onValueChange={(itemValue, itemIndex) => this.setState({ maxPlayer: itemValue })}
                                             style={{ minWidth: 160 }}
-                                            selectedValue={this.state.maxPlayer.toString()}>
-                                            <Picker.Item label="4 Jugadores" value="4" />
+                                            selectedValue={this.state.maxPlayer.toString()} >
+                                            <Picker.Item label="4 Jugadores" value="4" style={{fontFamily:'FredokaOne-Regular'}} />
                                             <Picker.Item label="8 Jugadores" value="8" />
                                         </Picker>
                                     </View>
@@ -109,7 +109,7 @@ class CreateRoom extends Component<any> {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ height: '100%', width: 115 }}>
-                                        <Text>{lang.roomRound}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:18}}>{lang.roomRound}</Text>
                                     </View>
                                     <View>
                                         <NumericInput minValue={2} value={this.state.round} maxValue={8} onChange={value => this.setState({ round: value })} />
@@ -118,7 +118,7 @@ class CreateRoom extends Component<any> {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ height: '100%', width: 110 }}>
-                                        <Text>{lang.roomTime}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:17}}>{lang.roomTime}</Text>
                                     </View>
                                     <View>
                                         <Picker
@@ -131,15 +131,15 @@ class CreateRoom extends Component<any> {
                                         </Picker>
                                     </View>
                                 </View>
-                                <View>
+                                <View style={{ paddingTop:35 }}>
                                     <TouchableOpacity
                                         style={{
                                             alignItems: 'center', backgroundColor: '#DDDDDD',
-                                            padding: 10
+                                            padding: 10, borderRadius:30
                                         }}
                                         onPress={this.createRoom}
                                     >
-                                        <Text>{lang.createRoom}</Text>
+                                        <Text style={{fontFamily:"FredokaOne-Regular", fontSize:18 }}>{lang.createRoom}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         height: '30%',
-        width: '65%',
+        width: '70%',
         borderRadius: 5,
         padding: 10
     }

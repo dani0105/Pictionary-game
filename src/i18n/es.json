@@ -7,7 +7,7 @@
     "play_button":"Empezar",
     "createRoom":"Crear sala",
     "joinRoom":"Unirse a sala",
-    "joinRoomErr":"No se pudo conectar a la sala\n🙁",
+    "joinRoomErr":"No se pudo conectar a la sala 🙁",
     "joinRoomErrMsg":"¿Estás seguro de que existe? Quizá la sala es privada o ya comenzó...",
     "roomNumber":"Número de sala:",
     "roomNumberNull":"Ingresa el número de sala :)",

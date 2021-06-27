@@ -39,6 +39,7 @@ class JoinRoom extends Component<any> {
         })
         //Listen response from the socket
         this.props.Socket.on("room:connected", (data: any) => {
+            console.log(data)
             if (data.success){
                 this.setState({roomId:this.state.roomCode})
             }else{
@@ -49,7 +50,7 @@ class JoinRoom extends Component<any> {
 
 
     showToast = () =>{
-        this.setState({roomCode: ""});
+        //this.setState({roomCode: ""});
         ToastAndroid.showWithGravityAndOffset(
             lang.roomNumberNull,
             ToastAndroid.SHORT,
@@ -57,6 +58,7 @@ class JoinRoom extends Component<any> {
             25,
             50
         );
+        this.setState({roomCode:""});
     }
 
     onFinishGame = () => {
@@ -72,8 +74,8 @@ class JoinRoom extends Component<any> {
         if(this.state.showAlert)
             return(
                 <SafeAreaView style={styles.container}>
-                    <ImageBackground source={require('../assets/Fondo_Pictionary_2.png')}  style={styles.backgroundImage}>
-                        <AwesomeAlert 
+                    <ImageBackground source={require('../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
+                        <AwesomeAlert
                             show={this.state.showAlert}
                             showProgress={false}
                             title={lang.joinRoomErr}
@@ -91,8 +93,9 @@ class JoinRoom extends Component<any> {
                             onConfirmPressed={() => {
                                 this.setState({showAlert:false});
                             }}
-                            titleStyle={{textAlign: "center"}}
-                            messageStyle={{textAlign: "center"}}
+                            titleStyle={{textAlign: "center", fontFamily:"FredokaOne-Regular"}}
+                            messageStyle={{textAlign: "center", fontFamily:"FredokaOne-Regular"}}
+                            confirmButtonTextStyle={{padding:8,  fontFamily:"FredokaOne-Regular"}}
                         />                        
                     </ImageBackground>
                 </SafeAreaView>
@@ -100,7 +103,7 @@ class JoinRoom extends Component<any> {
         else
             return (
                 <SafeAreaView style={styles.container}>
-                    <ImageBackground  source={require('../assets/Fondo_Pictionary_2.png')}  style={styles.backgroundImage}>
+                    <ImageBackground  source={require('../assets/Fondo_Pictionary.png')}  style={styles.backgroundImage}>
                         <View style={{flexDirection: "row", alignItems: "center", padding: 10, paddingTop:330 }}>
                             <Text style={styles.textStyle}>
                                 {lang.roomNumber}
@@ -145,14 +148,15 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: 18,
-        fontWeight: "bold",
+        fontFamily:"FredokaOne-Regular",
         color: "black",
         textAlign: "center",
-        marginRight: 10,
+        marginRight: 10
     },
     input: {
         height: 40,
-        margin: 5
+        margin: 5,
+        fontFamily:"FredokaOne-Regular"
     },
     backgroundImage:{
         flex : 1,

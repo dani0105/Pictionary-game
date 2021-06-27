@@ -36,7 +36,8 @@ class Login extends Component<any> {
                         <Text style={styles.textStyle}>
                             {lang.username_label}
                         </Text>
-                        <TextInput style={styles.input} placeholder={lang.username_input} onChangeText={(value:string) => this.setState({username: value})}>
+                        <TextInput style={styles.input} placeholder={lang.username_input} placeholderTextColor="#FFFFFF"
+                        onChangeText={(value:string) => this.setState({username: value})}>
                         </TextInput>
                     </View>
                     <View style={{paddingTop:20}}> 
@@ -67,13 +68,15 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: 18,
-        fontWeight: "bold",
+        fontFamily:"FredokaOne-Regular",
         color: "black",
-        textAlign: "center"
+        textAlign: "center",
+        marginRight: 10
     },
     input: {
         height: 40,
-        margin: 10
+        margin: 5,
+        fontFamily:"FredokaOne-Regular"
     },
     backgroundImage:{
         flex : 1,

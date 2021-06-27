@@ -28,7 +28,6 @@ class DashBoard extends Component<any> {
     joinRoom = () => {
         //Start the game
         this.props.navigation.push('JoinRoom')
-        Alert.alert("Final");
     } 
 
     render() {
@@ -70,11 +69,12 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: 18,
-        fontWeight: "bold",
+        fontFamily:"FredokaOne-Regular",
         color: "black",
         textAlign: "center"
     },
     input: {
+        fontFamily:"FredokaOne-Regular",
         height: 40,
         margin: 5
     },
