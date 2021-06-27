@@ -15,7 +15,8 @@ interface props {
     idRoom: number
     onFinish: () => void,
     Socket: Socket,
-    isJoin: boolean
+    isJoin: boolean,
+    Auth:any
 }
 
 interface State {
@@ -159,6 +160,13 @@ export class GameRoom extends Component<props> {
     */
     onFinish = (data) => {
         console.log(data)
+        this.props.Socket.off("preround", this.preRound);
+        this.props.Socket.off("room:players", this.onPlayerUpdate);
+        this.props.Socket.off("chat:receive", this.onChatReceive);
+        this.props.Socket.off("round", this.onRound);
+        this.props.Socket.off("room:got", this.onGotRoom);
+        this.props.Socket.off("room:deleted", this.onFinish);
+        this.props.Socket.off("word", this.onWord);
         this.props.onFinish();
     }
 
@@ -170,7 +178,7 @@ export class GameRoom extends Component<props> {
     }
 
     sendMessage = (message: string) => {
-        this.props.Socket.emit("chat:send", { username: "prueba", message: message })
+        this.props.Socket.emit("chat:send", { username: this.props.Auth.data, message: message })
     }
 
     preRound = (data) => {
