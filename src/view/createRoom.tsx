@@ -137,8 +137,8 @@ class CreateRoom extends Component<any> {
                                     <Text style={styles.textStyle}>
                                         {lang.password}
                                     </Text>
-                                    <TextInput style={{height: 50, width: 200, paddingLeft: 1, fontFamily:"FredokaOne-Regular", fontSize: 12}} 
-                                    placeholder={lang.password_input_create} placeholderTextColor="#FFFFFF"
+                                    <TextInput style={{height: 50, width: 200, paddingLeft: 1, fontFamily:"Montserrat-Medium", fontSize: 14}} 
+                                    placeholder={lang.password_input_c} placeholderTextColor="black"
                                     onChangeText={(value:string) => this.setState({password: value})}>
                                     </TextInput>
                                 </View>

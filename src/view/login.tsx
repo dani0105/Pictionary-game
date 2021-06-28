@@ -36,7 +36,7 @@ class Login extends Component<any> {
                         <Text style={styles.textStyle}>
                             {lang.username_label}
                         </Text>
-                        <TextInput style={styles.input} placeholder={lang.username_input} placeholderTextColor="#FFFFFF"
+                        <TextInput style={styles.input} placeholder={lang.username_input} placeholderTextColor="black"
                         onChangeText={(value:string) => this.setState({username: value})}>
                         </TextInput>
                     </View>
@@ -44,7 +44,7 @@ class Login extends Component<any> {
                         <Pressable
                             style={styles.button}
                             onPress={() => this.startGame()}>
-                            <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                            <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "black", 
                             textAlign: "center", marginRight: 10}}>
                                 {lang.play_button}
                             </Text>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 200,
         margin: 5,
-        fontFamily:"FredokaOne-Regular",
+        fontFamily:"Montserrat-Medium",
         fontSize: 14
     },
     backgroundImage:{

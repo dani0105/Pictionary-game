@@ -109,7 +109,7 @@ class JoinRoom extends Component<any> {
                             <Text style={styles.textStyle}>
                                 {lang.roomNumber}
                             </Text>
-                            <TextInput style={styles.input} placeholder={lang.numberRoom_input} placeholderTextColor="#FFFFFF" 
+                            <TextInput style={styles.input} placeholder={lang.numberRoom_input} placeholderTextColor="black" 
                             keyboardType="numeric" onChangeText={(value:string) => this.setState({roomCode: value})}>
                             </TextInput>
                         </View>
@@ -117,7 +117,7 @@ class JoinRoom extends Component<any> {
                             <Text style={styles.textStyle}>
                                 {lang.password}
                             </Text>
-                            <TextInput style={styles.input} placeholder={lang.password_input_c} placeholderTextColor="#FFFFFF" 
+                            <TextInput style={styles.input} placeholder={lang.password_input_c} placeholderTextColor="black" 
                             onChangeText={(value:string) => this.setState({roomPassword: value})}>
                             </TextInput>
                         </View>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 200,
         margin: 5,
-        fontFamily:"FredokaOne-Regular",
+        fontFamily:"Montserrat-Medium",
         fontSize: 14
     },
     backgroundImage:{

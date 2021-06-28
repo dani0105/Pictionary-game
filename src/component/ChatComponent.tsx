@@ -32,7 +32,7 @@ export class ChatComponent extends Component<props> {
 
     renderItem = ({ item }) => (
         <View style={{ display: 'flex', flexDirection: 'row' }}>
-            <Text style={{ fontFamily:"FredokaOne-Regular",padding:2.5 }}>{item.username}: </Text>
+            <Text style={{ fontFamily:"FredokaOne-Regular", padding:2.5, paddingLeft:15 }}>{item.username}: </Text>
             <Text style={{ fontFamily:"Montserrat-Medium", padding:2.5 }}>{item.message}</Text>
         </View>
     );
@@ -57,7 +57,7 @@ export class ChatComponent extends Component<props> {
                                 this.props.sendMessage(this.state.message)
                                 this.setState({ message: "" })
                             }}
-                            //style={{fontFamily:"Montserrat-Medium"}}
+                            style={{paddingLeft:15}}
                         />}
                     />
                 </View>

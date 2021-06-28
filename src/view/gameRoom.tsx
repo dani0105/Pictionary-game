@@ -243,11 +243,13 @@ export class GameRoom extends Component<props> {
                 </Modal>
                 <View style={styles.header}>
                     <View style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Text style={{ fontFamily:"Montserrat-Medium", fontWeight: "500" }}>{lang.roomId}: {this.props.idRoom}</Text>
-                        <Text style={{ fontFamily:"Montserrat-Medium", fontWeight: "500", marginLeft: 10 }}>
+                        <Text style={{ fontFamily:"Montserrat-Medium", fontSize:15, fontWeight: "500", marginLeft: 25, }}>
+                            {lang.roomId}: {this.props.idRoom}
+                        </Text>
+                        <Text style={{ fontFamily:"Montserrat-Medium", fontSize:15, fontWeight: "500", marginLeft: 15 }}>
                             {lang.roomRound} {this.state.currentRound}/{this.state.totalRounds}
                         </Text>
-                        <Text style={{ fontFamily:"Montserrat-Medium", fontWeight: "500", marginLeft: 10 }}>
+                        <Text style={{ fontFamily:"Montserrat-Medium", fontSize:15, fontWeight: "500", marginLeft: 15 }}>
                             {lang.time} {this.state.timer}
                         </Text>
                     </View>
