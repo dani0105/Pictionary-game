@@ -24,5 +24,6 @@
     "time":"Tiempo",
     "waiting":"Waiting for players",
     "writeMessage":"Answer...",
-    "exit":"Exit"
+    "exit":"Exit",
+    "goBack":"Back"
 }

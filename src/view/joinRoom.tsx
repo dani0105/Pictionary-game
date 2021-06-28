@@ -29,6 +29,8 @@ class JoinRoom extends Component<any> {
         }
     }
 
+    componentWillUnmount(){
+    }
 
     joinRoom = () => {
         //Start the game
@@ -40,7 +42,6 @@ class JoinRoom extends Component<any> {
         })
         //Listen response from the socket
         this.props.Socket.on("room:connected", (data: any) => {
-            console.log(data)
             if (data.success){
                 this.setState({roomId:this.state.roomCode})
             }else{
@@ -63,7 +64,8 @@ class JoinRoom extends Component<any> {
     }
 
     onFinishGame = () => {
-        this.setState({roomId:-1});
+        //this.setState({roomId:-1});
+        console.log("Reinicie la vara perro")
     }
 
 
@@ -128,6 +130,14 @@ class JoinRoom extends Component<any> {
                                     <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
                                     textAlign: "center", marginRight: 10}}>
                                         {lang.joinRoom}
+                                    </Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => this.props.navigation.pop()}>
+                                    <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                                    textAlign: "center", marginRight: 10}}>
+                                        {lang.goBack}
                                     </Text>
                             </Pressable>
                         </View>

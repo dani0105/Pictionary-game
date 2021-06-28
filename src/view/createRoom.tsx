@@ -64,7 +64,11 @@ class CreateRoom extends Component<any> {
     }
 
     onFinishGame = () => {
-        this.setState({roomId:-1});
+        //this.setState({roomId:-1});
+        console.log("Reinicie la vara perro")
+    }
+
+    componentWillUnmount(){
     }
 
     render() {
@@ -155,7 +159,17 @@ class CreateRoom extends Component<any> {
                                     </TouchableOpacity>
                                 </View>
 
-                                
+                                <View style={{ paddingTop:35 }}>
+                                    <TouchableOpacity
+                                        style={{
+                                            alignItems: 'center', backgroundColor: "#2196F3",
+                                            padding: 10, borderRadius:30
+                                        }}
+                                        onPress={() => this.props.navigation.pop()}
+                                    >
+                                        <Text style={{fontFamily:"FredokaOne-Regular", fontSize:18, color:"white" }}>{lang.goBack}</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
 
                         </View>

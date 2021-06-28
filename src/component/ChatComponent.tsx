@@ -57,6 +57,7 @@ export class ChatComponent extends Component<props> {
                                 this.props.sendMessage(this.state.message)
                                 this.setState({ message: "" })
                             }}
+                            placeholderTextColor="black"
                             style={{paddingLeft:15}}
                         />}
                     />

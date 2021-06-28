@@ -130,7 +130,6 @@ export class GameRoom extends Component<props> {
     onChatReceive = (data) => {
         var username;
         var message;
-        console.log("mensajes",data)
         if (data.action) {
             username = data.message;
             switch (data.action) {
@@ -163,7 +162,6 @@ export class GameRoom extends Component<props> {
         cuando termina la partida
     */
     onFinish = (data) => {
-        console.log(data)
         this.props.Socket.off("preround", this.preRound);
         this.props.Socket.off("room:players", this.onPlayerUpdate);
         this.props.Socket.off("chat:receive", this.onChatReceive);
@@ -186,7 +184,6 @@ export class GameRoom extends Component<props> {
     }
 
     preRound = (data) => {
-        console.log("pre round", data)
         this.setState({ isPlaying: false, isPreRound: true, currentWord: data.word })
         setTimeout(() => this.setState({ isPreRound: false }), data.preRound)
     }

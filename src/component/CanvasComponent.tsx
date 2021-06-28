@@ -46,7 +46,6 @@ export class CanvasComponent extends Component<props> {
         Aquí llega cuando un jugador está dibujando
     */
     onDrawing = (data) => {
-        
         if (!this.props.isPlaying) {
             if (data.action == 1) { //nuevo trazo
                 if(data.data)

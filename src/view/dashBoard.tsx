@@ -53,6 +53,16 @@ class DashBoard extends Component<any> {
                             </Text>
                         </Pressable>
                     </View>
+                    <View style={{paddingTop:20}}> 
+                        <Pressable
+                            style={styles.button}
+                            onPress={() => this.props.navigation.pop()}>
+                            <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
+                            textAlign: "center", marginRight: 10}}>
+                                {lang.goBack}
+                            </Text>
+                        </Pressable>
+                    </View>
                 </ImageBackground>
             </SafeAreaView>
         );
