@@ -172,7 +172,6 @@ export class GameRoom extends Component<props> {
         this.props.Socket.off("room:deleted", this.onFinish);
         this.props.Socket.off("word", this.onWord);
         this.setState({finish:true, isPreRound: true, currentWord: data.word});
-        this.props.onFinish();
     }
 
     stopwatch = () => {
@@ -232,7 +231,7 @@ export class GameRoom extends Component<props> {
                             {this.state.finish ? (
                             <Pressable
                                 style={styles.button}
-                                onPress={this.props.onFinish}>
+                                onPress={()=>this.props.onFinish()}>
                                 <Text style={{fontSize: 18, fontFamily:"FredokaOne-Regular", color: "white", 
                                 textAlign: "center", marginRight: 10}}>
                                     {lang.exit}

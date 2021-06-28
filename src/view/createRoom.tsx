@@ -113,7 +113,7 @@ class CreateRoom extends Component<any> {
                                         <Text style={{fontFamily:"FredokaOne-Regular", paddingTop:15, fontSize:18}}>{lang.roomRound}</Text>
                                     </View>
                                     <View>
-                                        <NumericInput minValue={2} value={this.state.round} maxValue={8} onChange={value => this.setState({ round: value })} />
+                                        <NumericInput minValue={1} value={this.state.round} maxValue={8} onChange={value => this.setState({ round: value })} />
                                     </View>
                                 </View>
 
