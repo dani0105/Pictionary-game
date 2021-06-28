@@ -25,5 +25,9 @@
     "waiting":"Esperando jugadores",
     "writeMessage":"Respuesta...",
     "exit":"Salir",
-    "goBack":"Volver"
+    "goBack":"Volver",
+    "playerDrawing":"está dibujando",
+    "playerAnswer":"contesto correctamente",
+    "playerDisconect":" se desconecto",
+    "playerConnect":" se conecto"
 }

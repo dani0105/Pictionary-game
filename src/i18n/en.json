@@ -25,5 +25,9 @@
     "waiting":"Waiting for players",
     "writeMessage":"Answer...",
     "exit":"Exit",
-    "goBack":"Back"
+    "goBack":"Back",
+    "playerDrawing":"is drawing",
+    "playerAnswer":" answer correct",
+    "playerDisconect":" left",
+    "playerConnect":" join"
 }

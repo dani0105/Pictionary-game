@@ -134,16 +134,16 @@ export class GameRoom extends Component<props> {
             username = data.message;
             switch (data.action) {
                 case 1:
-                    message = "se conecto"
+                    message = lang.playerConnect
                     break;
                 case 2:
-                    message = "se desconecto"
+                    message = lang.playerDisconect
                     break;
                 case 3:
-                    message = "está dibujando"
+                    message = lang.playerDrawing
                     break;
                 case 4:
-                    message = "respuesta correcta"
+                    message = lang.playerAnswer
                     break;
             }
         } else {
