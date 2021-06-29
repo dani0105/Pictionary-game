@@ -1,0 +1,7 @@
+*
+!public/
+!private/
+!logs/
+!.gitignore
+!temp/
+!README.md
