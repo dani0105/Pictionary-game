@@ -1,6 +1,6 @@
 # **Pictionary Game**
 ## Aplicación para Android del juego Pictonary.
-![alt](../Frontend/src/assets/logo.gif)
+![alt](./Frontend/src/assets/logo.gif)
 ## **Instalación** 
 Para poder hacer uso de este proyecto es necesario tener instalado `Node` y tener un teléfono o emulador de `Android`. Para empezar, clone el repositorio con:
 
